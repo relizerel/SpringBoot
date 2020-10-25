@@ -13,12 +13,11 @@ import java.util.Set;
 @Transactional
 public class RoleServiceImp implements RoleService {
 
-    //@Value("${defaultRoleName}")
-    @Value("USER")
-    private final String defaultRoleName = "USER";
+    public final RoleRepo roleRepo;
 
-    @Autowired
-    public RoleRepo roleRepo;
+    public RoleServiceImp(RoleRepo roleRepo) {
+        this.roleRepo = roleRepo;
+    }
 
     @Override
     public Set<UserRole> getRoleSet(Set<String> roles) {
@@ -27,6 +26,7 @@ public class RoleServiceImp implements RoleService {
 
     @Override
     public UserRole getDefaultRole() {
+        String defaultRoleName = "USER";
         return roleRepo.getRoleByName(defaultRoleName);
     }
 }

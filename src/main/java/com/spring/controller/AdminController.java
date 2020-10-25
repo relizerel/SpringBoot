@@ -3,9 +3,7 @@ package com.spring.controller;
 import com.spring.model.User;
 import com.spring.service.RoleService;
 import com.spring.service.UserService;
-import com.spring.util.Transformation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,15 +15,18 @@ import java.util.Set;
 @RequestMapping("admin/**")
 public class AdminController {
 
-    @Autowired
+    final
     UserService userService;
-    @Autowired
+    final
     RoleService roleService;
-    @Autowired
-    Transformation transformation;
+
+    public AdminController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @GetMapping("/users")
-    public ModelAndView index(){
+    public ModelAndView index() {
         List<User> listUsers = userService.listUsers();
         ModelAndView modelAndView = new ModelAndView("admin/users");
         modelAndView.addObject("allUsers", listUsers);
@@ -54,7 +55,6 @@ public class AdminController {
     }
 
 
-
     @GetMapping("/signup")
     public ModelAndView showAdminForm(User user) {
         ModelAndView modelAndView = new ModelAndView("admin/signup");
@@ -68,16 +68,4 @@ public class AdminController {
         userService.addUser(user);
         return "redirect:/admin/users";
     }
-
-
-/*    private ModelAndView getModelAndView(User admin) {
-        User user = new User();
-        ModelAndView modelAndView = new ModelAndView("/admin/users");
-        String stringRoles = transformation.roleSetToString(admin);
-        modelAndView.addObject("adminInfo", admin)
-                .addObject("user", user)
-                .addObject("userRoles", stringRoles)
-                .addObject("userData", userService.listUsers());
-        return modelAndView;
-    }*/
 }

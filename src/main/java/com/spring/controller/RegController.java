@@ -14,10 +14,15 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/reg")
 public class RegController {
 
-    @Autowired
+    final
     UserService userService;
-    @Autowired
+    final
     RoleService roleService;
+
+    public RegController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @GetMapping
     public ModelAndView showRegistrationForm(User user) {
