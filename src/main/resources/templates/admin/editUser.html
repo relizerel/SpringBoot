@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="4" align="center">
+    <td>
+        <form action="#"
+              th:action="@{/admin/saveUser/{id}(id=${getUser.id})}"
+              th:object="${getUser}"
+              method="post">
+            <label for="name">Name</label>
+            <input type="text" th:field="*{name}" id="name" placeholder="Name">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+            <label for="password">Password</label>
+            <input type="text" th:field="*{password}" id="password" placeholder="Password">
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+            <label for="email">Email</label>
+            <input type="text" th:field="*{email}" id="email" placeholder="Email">
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <td>
+        <ul>
+            <li>
+                <input id="role1" name="roles" type="checkbox" value="ADMIN"/>
+                <label for="role1">ADMIN ROLE</label>
+            </li>
+            <li>
+                <input id="role2" name="roles" type="checkbox" value="USER"/>
+                <label for="role2">USER ROLE</label>
+            </li>
+        </ul>
+    </td>
+
+    <td><input type="submit" value="Update User"></td>
+    </form>
+    </td>
+    <td>
+        <form action="#"
+              th:action="@{/admin/delete/{id}(id=${getUser.id})}"
+              th:object="${getUser}"
+              method="post">
+            <input type="submit" value="Delete User">
+        </form>
+    </td>
+</table>
+<p align="center"><a href="/admin/users">Return To User Table</a></p>
+
+</body>
+</html>
